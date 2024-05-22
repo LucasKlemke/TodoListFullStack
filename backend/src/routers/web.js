@@ -1,9 +1,19 @@
-const express = require("express");
+import express from 'express';
 
 const { Router } = express;
 
 const router = Router();
 
-router.get("/ping", (req, res) => res.json({ pong: true }));
+router.get('/ping', (req, res) => res.json({ pong: true }));
 
-module.exports = router;
+export default router;
+
+//5chamadas
+//(USAR ENDPOINTS)
+
+//CRUD
+//getbyid
+//getall
+//update
+//insert
+//delete
