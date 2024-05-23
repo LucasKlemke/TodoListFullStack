@@ -1,42 +1,33 @@
 import pg from "pg";
+import 'dotenv/config'
 
-const { Client } = pg;
+const USER_DB = process.env.USER_DB
+const PASSWORD = process.env.PASSWORD
+const HOST = process.env.HOST
+const PORT = process.env.PORT
+const DATABASE = process.env.DATABASE
 
 const dbConfig = {
-  user: "postgres",
-  password: `2005`,
-  host: "localhost",
-  port: "5432",
-  database: "todolist",
+  user: USER_DB,
+  password: PASSWORD,
+  host: HOST,
+  port: PORT,
+  database: DATABASE,
 };
 
-const client = new Client(dbConfig);
+const { Pool } = pg
 
-client
-  .connect()
-  .then(() => {
+// const dbConfig = {
+//   user: 'postgres',
+//   password: '2005',
+//   host: 'localhost',
+//   port: '5432',
+//   database: 'todolist',
+// };
 
-    console.log("Conectado ao database");
+const pool = new Pool(dbConfig);
 
-    client.query('select * from tasks', (err, result) => {
-      if (err) {
-        console.log("erro na query", err);
-      } else {
-        console.log(result.rows);
-      }
+// let x = await pool.query('select * from tasks')
+// console.log(x.rows)
 
-      client
-        .end()
-        .then(() => {
-          console.log("Connection to PostgreSQL closed");
-        })
-        .catch((err) => {
-          console.error("Error closing connection", err);
-        });
-    });
-  })
-  .catch((err) => {
-    console.error("Falha ao conectar a database", err);
-  });
-
-export default client;
+ export default pool

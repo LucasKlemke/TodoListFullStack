@@ -1,10 +1,17 @@
 import express from 'express';
+import {getTasks, getTaskByID,deleteTaskByID, addTask} from '../controller/taskController.js';
 
 const { Router } = express;
 
 const router = Router();
 
-router.get('/ping', (req, res) => res.json({ pong: true }));
+// router.get('/', (req, res) => res.send("teste"));
+router.get('/',getTasks)
+router.get('/:id', getTaskByID)
+
+router.post('/',await addTask)
+
+router.delete('/:id', deleteTaskByID)
 
 export default router;
 
