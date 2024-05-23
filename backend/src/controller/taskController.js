@@ -6,6 +6,7 @@ import {
   takeMaxID,
   checkTaskExistance,
   addNewTask,
+  updateTask
 } from "./taskQueries.js";
 //importando conexao
 
@@ -34,21 +35,8 @@ const deleteTaskByID = (req, res) => {
 
 const addTask = async (req, res) => {
   let { taskname } = req.body;
-  console.log(taskname);
 
   let id;
-
-//   let newId = await pool.query(takeMaxID)
-//   console.log(newId.rows[0].max)
-
-//   if (newId.rows.length) {
-//           id = 1;
-//         } else {
-//           id = results.rows[0].max + 1;
-//         }
-//         console.log(taskname)
-//     let result = await pool.query(addNewTask,[newId, taskname, false])
-//     console.log(result)
 
   pool.query(takeMaxID, (error, results) => {
     if (error) throw error;
@@ -76,7 +64,16 @@ const addTask = async (req, res) => {
   });
 };
 
-export { getTasks, getTaskByID, deleteTaskByID, addTask };
+const updateTaskFunction = (req, res) => {
+  const {taskname, ischecked} = req.body
+  const { id } = req.params
+
+  pool.query(updateTask,[taskname,ischecked,id], (error, results) => {
+    if (error) throw error;
+    res.status(201).send({id, taskname, ischecked})
+})}
+
+export { getTasks, getTaskByID, deleteTaskByID, addTask, updateTaskFunction };
 
 //CRUD
 

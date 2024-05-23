@@ -1,5 +1,5 @@
 import express from 'express';
-import {getTasks, getTaskByID,deleteTaskByID, addTask} from '../controller/taskController.js';
+import {getTasks, getTaskByID,deleteTaskByID, addTask, updateTaskFunction} from '../controller/taskController.js';
 
 const { Router } = express;
 
@@ -10,6 +10,8 @@ router.get('/',getTasks)
 router.get('/:id', getTaskByID)
 
 router.post('/',await addTask)
+
+router.put('/:id', updateTaskFunction)
 
 router.delete('/:id', deleteTaskByID)
 

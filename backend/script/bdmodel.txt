@@ -1,0 +1,1 @@
+create table tasks (taskId int primary key, taskName varchar(20), isChecked bool);
