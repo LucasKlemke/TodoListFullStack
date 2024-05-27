@@ -1,0 +1,136 @@
+
+.divcontainer{
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    padding: 2rem 10rem;
+    margin: 5rem;
+}
+
+.todo{
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    font-weight: 80;
+}
+
+.title{
+    font-weight: 50;
+}
+
+.inputdiv{
+    display: flex;
+    justify-content: space-around;
+    font-size: 1rem;
+    color: #597f57;
+    width: 20vw;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border-radius: 1.5rem;
+    width: 100%;
+}
+
+.button{
+    padding: 0rem 1rem;
+    border: none;
+    color: white;
+    background-color: #597f57;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.button:hover{
+    scale: 1.05;
+    transition: .5s;
+}
+
+.done{
+    text-decoration: line-through;
+}
+
+.buttonTask{
+    cursor: pointer;
+    border-radius: 1rem;
+    padding: .5rem 1rem;
+    border: none;
+    color: white;
+    background-color: #597f57;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin: 0 .5vw;
+    transition: .5s;
+}
+
+
+
+.buttonTask:hover{
+    scale: 1.05;
+    transition: .5s;
+}
+
+.input{
+    border: none;
+    width: 100%;
+    padding: .5rem;
+    border-radius: 1.5rem;
+    font-size: 1rem;
+}
+
+.input:focus{
+    outline: 0;
+}
+
+.taskscontainer{
+    height: 40vh;
+    overflow: auto;
+    width: 100%;
+}
+
+.flex{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.buttonclose{
+    font-weight: 50;
+    font-size: 1.5vw;
+    padding: 0rem 1rem;
+    border: none;
+    color: black;
+    background-color: transparent;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.task{
+    color: #141f14;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    background-color: #d2e1d1;
+    border-left: #4b6f4a .5rem solid;
+    margin: 0rem 1rem;
+    padding-left: .5rem;
+    align-items: center;
+    margin-bottom: .5rem;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 0;
+}
+
+.absolute{
+    position: absolute;
+}
+
+.taskcompleted{
+    color: #141f14;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    background-color: #d2e1d1;
+    border-left: #4b6f4a .5rem solid;
+    margin: 0rem 1rem;
+    padding-left: .5rem;
+    align-items: center;
+    margin-bottom: .5rem;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 0;
+    opacity: 50%;
+}
