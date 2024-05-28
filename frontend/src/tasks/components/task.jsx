@@ -9,16 +9,18 @@ Task.propTypes = {
   onEdit: PropTypes.func,
 }
 
-export default function Task({tasktitle, onRemove, onCheck, onEdit, task}){
+export default function Task({tasktitle, onRemove, onCheck, onEdit, task,setTasktitle}){
 
 
     return(
-        <div className={task.isChecked == true ? (styles.taskcompleted) : styles.task}>
-        <p className={task.isChecked == true ? (styles.done) : ("")}>{tasktitle}</p>
+        <div className={task.ischecked == true ? (styles.taskcompleted) : styles.task}>
+        <p className={task.ischecked == true ? (styles.done) : ("")}>{tasktitle}</p>
         <div>
-          <button className={styles.buttonTask} onClick={onCheck}>{task.isChecked == true ? ('DONE') : ('DO')}</button>
+          <button className={styles.buttonTask} onClick={onCheck}>{task.ischecked == true ? ('DONE') : ('DO')}</button>
           <button className={styles.buttonTask} onClick={onRemove}>DELETE</button>
-          <button className={styles.buttonTask} onClick={onEdit}>EDIT</button>
+          <button className={styles.buttonTask} id={tasktitle} onClick={(ev) => {
+           onEdit(ev)
+          }}>EDIT</button>
         </div>
       </div>
     )

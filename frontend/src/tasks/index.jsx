@@ -1,54 +1,96 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./styles/Tasks.module.css";
 import Task from "./components/task";
 import Editform from "./components/editform";
 import Createform from "./components/createform";
+import axios from "axios";
+
+async function connect() {
+  try {
+    let res = await axios.get("http://localhost:3000/tasks");
+
+    const resposta = res.data;
+    // console.log(resposta); // This will log once when the data is fetched
+
+    return resposta;
+  } catch (error) {
+    console.log("erro", error);
+    throw error;
+  }
+}
 
 export default function index() {
-
   const [tasktitle, setTasktitle] = useState("");
   const [tasks, setTasks] = useState([]);
   const [edit, setEdit] = useState(false);
   const [idtoedit, setIdtoedit] = useState("");
+  const jaFoi = useRef(false);
 
+  useEffect(() => {
+    if (!jaFoi.current) {
+      jaFoi.current = true;
+      connect().then((resposta) => {
+        resposta.forEach((element) => {
+          setTasks((state) => [...state, element]);
+        });
+      });
+    }
+  }, []);
 
-  const handleSubmit = (ev) => {
+  const handleSubmit =  async(ev) => {
     ev.preventDefault();
-
-    const newTask = {
-      taskid: tasks.length + 1,
-      tasktitle: tasktitle,
-      isChecked: false,
-    };
-
-    setTasks((state) => [...state, newTask]);
-    setTasktitle("");
+  
+    if (tasktitle.length < 5 || tasktitle.length > 20) {
+      alert('Task name is invalid');
+    } else {
+        let retorno = await axios.post("http://localhost:3000/tasks", { taskname: tasktitle });
+        let objeto = await retorno.data
+        console.log(objeto)
+        setTasks((state) => [...state, objeto]);
+        setTasktitle(""); 
+    }
   };
 
   const removeTask = (taskid) => {
+    axios.delete(`http://localhost:3000/tasks/${taskid}`);
     setTasks((state) => state.filter((tasks) => tasks.taskid !== taskid));
   };
 
-  const checkTask = (taskid) => {
-    setTasks((state) =>
-      state.map((task) =>
-        task.taskid == taskid ? { ...task, isChecked: !task.isChecked } : task
-      )
+  const checkTask = async (taskid) => {
+    setTasks(async (state) =>
+       state.map(async (task) => {
+        if (task.taskid === taskid) {
+          await axios.put(`http://localhost:3000/tasks/${taskid}`, {
+            taskname: task.taskname,
+            ischecked: !task.ischecked,
+          });
+          setTasks(tasks.map(task => task.taskid === taskid ? {...task, ischecked: !task.ischecked} : task));
+          setTasktitle("");
+        }
+      })
     );
-    console.log(tasks);
   };
 
-  const editTask = (taskid) => {
-    setTasktitle("");
+  const editTask = (taskid,ev) => {
+    setTasktitle(ev.target.id);
     setEdit(true);
     setIdtoedit(taskid);
   };
 
+
   const handleEditSubmit = (ev) => {
     ev.preventDefault();
     setTasks((state) =>
-      state.map((task) =>
-        task.taskid == idtoedit ? { ...task, tasktitle: tasktitle } : task
+      state.map(async (task) =>
+        {
+          if(task.taskid == idtoedit){
+            let retorno = await axios.put(`http://localhost:3000/tasks/${task.taskid}`, {taskname:tasktitle, ischecked:task.ischecked})
+            let objeto = retorno.data
+            console.log(objeto)
+            setTasks(tasks.map(task => task.taskid === parseInt(objeto.id) ? {...task, taskname:tasktitle} : task)); // Update tasks with latest data
+            setTasktitle(""); // Reset task title
+          }
+        }
       )
     );
     setEdit(false);
@@ -80,10 +122,11 @@ export default function index() {
                   <Task
                     key={task.taskid}
                     task={task}
-                    tasktitle={task.tasktitle}
+                    tasktitle={task.taskname}
                     onRemove={() => removeTask(task.taskid)}
                     onCheck={() => checkTask(task.taskid)}
-                    onEdit={() => editTask(task.taskid)}
+                    onEdit={(ev) => editTask(task.taskid,ev)}
+                    setTasktitle={setTasktitle}
                   />
                 ))
               ) : (

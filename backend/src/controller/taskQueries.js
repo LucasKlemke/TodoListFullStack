@@ -1,4 +1,4 @@
-const getAllTasks = 'SELECT * FROM tasks'
+const getAllTasks = 'SELECT * FROM tasks ORDER BY taskid'
 
 const getOneTask = 'SELECT * FROM tasks WHERE taskid = $1'
 

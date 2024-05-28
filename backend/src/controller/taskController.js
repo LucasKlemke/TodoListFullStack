@@ -72,7 +72,7 @@ const addTask = async (req, res) => {
             [id, taskname, ischecked],
             (error, results) => {
               if (error) throw error;
-              res.status(201).send({ id, taskname, ischecked });
+              res.status(201).send({ taskid:id, taskname, ischecked });
             }
           );
         }
